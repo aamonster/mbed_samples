@@ -1,7 +1,7 @@
 
 #ARMGNU=arm-thumb-elf
 #ARMGNU=arm-none-linux-gnueabi
-ARMGNU?=arm-none-eabi
+ARMGNU=arm-none-eabi
 
 all : blinker01.bin
 
@@ -10,10 +10,11 @@ blinker01.bin : blinker01.s memmap
 	$(ARMGNU)-ld -o blinker01.elf blinker01.o -T memmap
 	$(ARMGNU)-objdump -D blinker01.elf > blinker01.list
 	$(ARMGNU)-objcopy blinker01.elf blinker01.bin -O binary
+	lpcrc.exe blinker01.bin
 
 clean:
-	rm -f *.bin
-	rm -f *.o
-	rm -f *.elf
-	rm -f *.list
+	del *.bin
+	del *.o
+	del *.elf
+	del *.list
 

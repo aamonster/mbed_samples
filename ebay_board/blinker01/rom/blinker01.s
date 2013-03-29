@@ -25,24 +25,25 @@
 .word   hang        /* 18 External Interrupt(2) */
 .word   hang        /* 19 ...   */
 
+.thumb_func
 hang:   b .
 
 
 .thumb_func
 .globl _start
 _start:
-   ldr r0,=0x2009C040
+   ldr r0,=0x2009C040  /* FIO2DIR */
    ldrb r1,[r0]
    mov r2,#0x01
    orr r1,r2
    strb r1,[r0]
 
-   ldr r0,=0x2009C050
+   ldr r0,=0x2009C050  /* GPIO2_MASK */
    mov r1,#0x00
    strb r1,[r0]
 
-   ldr r0,=0x2009C058
-   ldr r1,=0x2009C05C
+   ldr r0,=0x2009C058  /* FIO2SET */
+   ldr r1,=0x2009C05C  /* FIO2CLR */
    ldr r2,=0x01
 
 mainloop:
