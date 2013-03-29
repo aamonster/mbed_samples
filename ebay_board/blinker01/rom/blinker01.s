@@ -32,6 +32,12 @@ hang:   b .
 .thumb_func
 .globl _start
 _start:
+   ldr r0,=0x400FC0C4  /* PCONP */
+   ldr r1,[r0]
+   ldr r2,=0x8000  /* to set bit15 - enable GPIO Clock */
+   orr r1,r2
+   strb r1,[r0]
+
    ldr r0,=0x2009C040  /* FIO2DIR */
    ldrb r1,[r0]
    mov r2,#0x01
@@ -47,9 +53,9 @@ _start:
    ldr r2,=0x01
 
 mainloop:
-   strb r2,[r0]
-   bl dowait
    strb r2,[r1]
+   bl dowait
+   strb r2,[r0]
    bl dowait
    b mainloop
 
